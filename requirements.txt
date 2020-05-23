@@ -1,0 +1,5 @@
+mkdocs==1.0.4
+mkdocs-material==4.4.1
+pygments==2.5.2
+pymdown-extensions==7.1
+python-markdown-math==0.6

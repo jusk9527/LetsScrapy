@@ -1,0 +1,52 @@
+site_name: Let's Scrapy!
+site_author: 'jusk9527'
+repo_name: 'LetsScrapy'
+repo_url: 'https://github.com/jusk9527/LetsScrapy'
+# theme: readthedocs
+
+copyright: 'Copyright &copy; 2019 - 2020 PegasusWang'
+
+# Configuration, https://squidfunk.github.io/mkdocs-material/
+theme:
+  name: 'material'
+  palette:
+    primary: 'black'
+    accent: 'indigo'
+  font:
+    text: 'Roboto'
+    code: 'Roboto Mono'
+
+extra_javascript:
+    - https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML
+
+extra:
+  # disqus: 'pegasus'
+  social:
+    - type: 'github'
+      link: 'https://github.com/jusk9527'
+
+markdown_extensions:
+  - admonition
+  - mdx_math:
+      enable_dollar_delimiter: true  #for use of inline $..$
+  - codehilite: # https://squidfunk.github.io/mkdocs-material/extensions/codehilite/
+      linenums: true
+      guess_lang: true
+  - toc:
+      permalink: true
+
+nav:
+- 简介: 'index.md'
+- Go基础:
+  - 'Scrapy 简单介绍': 'basics/00_hello_scrapy/00_hello_scrapy.md'
+  - 'Scrapy 源码 Spider': 'basics/01_go_basic_types/basic_types.md'
+  - 'Scrapy 源码 settings': 'basics/02_go_array_and_slice/array_and_slice.md'
+  - 'Scrapy 源码 Request/Response': 'basics/03_map/map.md'
+  - 'Scrapy 源码 CrawlSpider': 'basics/04_go_control_flow/go_procedural.md'
+  - 'Scrapy 源码 middewares': 'basics/05_func/func.md'
+  - 'Scrapy 源码 pipelines': 'basics/06_error/error.md'
+  - 'Scrapy 源码 items': 'basics/07_oop/oop.md'
+  - 'Scrapy scrapyd': 'basics/08_struct/struct.md'
+  - 'Scrapy scrapyd-api': 'basics/09_interface/interface.md'
+  - 'Scrapy splash': 'basics/10_goroutine/goroutine.md'
+  - 'Scrapy seleunm'
