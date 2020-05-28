@@ -518,6 +518,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../13_scrapy_其他/13_scrapy_其他/" title="其他" class="md-nav__link">
+      其他
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -834,7 +846,7 @@
 <span class="s">        :return:</span>
 <span class="s">        &quot;&quot;&quot;</span>
         <span class="n">job_id</span> = <span class="n">request</span>.<span class="n">data</span>.<span class="n">get</span>(<span class="s">&quot;job&quot;</span>, <span class="n">None</span>)
-        <span class="n">job_state</span> = <span class="k">self</span>.<span class="n">scrapyd</span>.<span class="n">job_status</span>(<span class="s">&#39;Facebook_Request&#39;</span>, <span class="n">job_id</span>)
+        <span class="n">job_state</span> = <span class="k">self</span>.<span class="n">scrapyd</span>.<span class="n">job_status</span>(<span class="s">&#39;Request&#39;</span>, <span class="n">job_id</span>)
 
         <span class="k">if</span> <span class="n">job_state</span> == <span class="s">&quot;running&quot;</span>:
             <span class="k">return</span> <span class="n">Response</span>(<span class="s">&quot;正在运行&quot;</span>)

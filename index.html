@@ -275,8 +275,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" title="本电子书的制作方式" class="md-nav__link">
-    本电子书的制作方式
+  <a href="#_4" title="二次创作" class="md-nav__link">
+    二次创作
   </a>
   
 </li>
@@ -467,6 +467,18 @@
   </li>
 
         
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="basics/13_scrapy_其他/13_scrapy_其他/" title="其他" class="md-nav__link">
+      其他
+    </a>
+  </li>
+
+        
       </ul>
     </nav>
   </li>
@@ -519,8 +531,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" title="本电子书的制作方式" class="md-nav__link">
-    本电子书的制作方式
+  <a href="#_4" title="二次创作" class="md-nav__link">
+    二次创作
   </a>
   
 </li>
@@ -565,37 +577,47 @@
 <li>学习基本库</li>
 <li>实践，实践是为了加强理解。也是为了消化知识</li>
 </ul>
-<h2 id="_4">本电子书的制作方式<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
-<p>安装依赖</p>
+<h2 id="_4">二次创作<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<ul>
+<li>clone本项目</li>
+</ul>
+<p>git clone https://github.com/jusk9527/LetsScrapy.git</p>
+<p><img alt="" src="http://q9vzy95p2.bkt.clouddn.com//20200528114439.png" /></p>
+<ul>
+<li>删除site文件夹</li>
+<li>更改mkdocs.yml的配置</li>
+<li>更改nav的文件路径</li>
+</ul>
+<p><img alt="" src="http://q9vzy95p2.bkt.clouddn.com//20200528114915.png" />
+<img alt="" src="http://q9vzy95p2.bkt.clouddn.com//20200528115102.png" /></p>
+<ul>
+<li>启动
+mkdocs server</li>
+</ul>
+<p><img alt="" src="http://q9vzy95p2.bkt.clouddn.com//20200528115319.png" /></p>
+<p>默认8000端口即可打开文件</p>
+<ul>
+<li>上传到github</li>
+</ul>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
 2
 3
 4
 5
-6
-7
-8</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">pip</span> <span class="n">install</span> <span class="n">mkdocs</span>    <span class="c1"># 制作电子书, http://markdown-docs-zh.readthedocs.io/zh_CN/latest/</span>
-<span class="c1"># https://stackoverflow.com/questions/27882261/mkdocs-and-mathjax/31874157</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">mitya57</span><span class="o">/</span><span class="n">python</span><span class="o">-</span><span class="n">markdown</span><span class="o">-</span><span class="n">math</span><span class="o">/</span><span class="n">archive</span><span class="o">/</span><span class="n">master</span><span class="o">.</span><span class="n">zip</span>
-
-<span class="c1"># 建议直接安装 requirements.txt 中的依赖。已经锁定了版本，不同的 mkdocs 之间有一定差异</span>
-<span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
-
-<span class="c1"># 如果你 fork 了本项目，可以定期拉取主仓库的代码来获取更新，目前还在不断更新相关章节</span>
+6</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="err">mkdocs new .</span>
+<span class="err">mkdocs build</span>
+<span class="err"># 不将site文件夹上传</span>
+<span class="err">echo &quot;site/&quot; &gt;&gt; .gitignore</span>
+<span class="err">#直接上传到github分支gh-deploy</span>
+<span class="err">mkdocs gh-deploy --clean</span>
 </code></pre></div>
 </td></tr></table>
 
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
-2
-3
-4
-5</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="n">也可以在clone本电子书后进行二次创作</span>
-<span class="n">mkdocs</span> <span class="n">serve</span>     <span class="c1"># 修改自动更新，浏览器打开 http://localhost:8000 访问</span>
-<span class="c1"># 数学公式参考 https://www.zybuluo.com/codeep/note/163962</span>
-<span class="n">mkdocs</span> <span class="n">gh</span><span class="o">-</span><span class="n">deploy</span>    <span class="c1"># 部署到自己的 github pages</span>
-<span class="c1"># 给 mkdocs 增加 gitalk 评论系统 https://50u1w4y.github.io/site/misc/gitalkBuild/</span>
-</code></pre></div>
-</td></tr></table>
+<p><img alt="" src="http://q9vzy95p2.bkt.clouddn.com//20200528120006.png" /></p>
+<ul>
+<li>骚等几秒打开命令行的地址就是远程电子书</li>
+</ul>
+<p>比如我的<a href="https://jusk9527.github.io/LetsScrapy/">地址就是</a></p>
                 
                   
                 
