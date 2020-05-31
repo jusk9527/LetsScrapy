@@ -390,21 +390,55 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_1" title="总结" class="md-nav__link">
+  <a href="#scrapy-scrapy-redis" title="scrapy 去重与scrapy-redis去重的区别" class="md-nav__link">
+    scrapy 去重与scrapy-redis去重的区别
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scrapy" title="scrapy 去重" class="md-nav__link">
+    scrapy 去重
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scrapy-redis_2" title="scrapy-redis去重" class="md-nav__link">
+    scrapy-redis去重
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" title="布隆过滤器" class="md-nav__link">
+    布隆过滤器
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="总结" class="md-nav__link">
     总结
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_2" title="思考" class="md-nav__link">
+  <a href="#_3" title="思考" class="md-nav__link">
     思考
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" title="参考资料" class="md-nav__link">
+  <a href="#_4" title="参考资料" class="md-nav__link">
     参考资料
   </a>
   
@@ -519,21 +553,55 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_1" title="总结" class="md-nav__link">
+  <a href="#scrapy-scrapy-redis" title="scrapy 去重与scrapy-redis去重的区别" class="md-nav__link">
+    scrapy 去重与scrapy-redis去重的区别
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scrapy" title="scrapy 去重" class="md-nav__link">
+    scrapy 去重
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scrapy-redis_2" title="scrapy-redis去重" class="md-nav__link">
+    scrapy-redis去重
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_1" title="布隆过滤器" class="md-nav__link">
+    布隆过滤器
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" title="总结" class="md-nav__link">
     总结
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_2" title="思考" class="md-nav__link">
+  <a href="#_3" title="思考" class="md-nav__link">
     思考
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" title="参考资料" class="md-nav__link">
+  <a href="#_4" title="参考资料" class="md-nav__link">
     参考资料
   </a>
   
@@ -2123,11 +2191,330 @@
 </td></tr></table>
 
 <p>就是说request_seen()这个方法会将请求加密的那个key做判断。存在就返回1,不存在就返回0。这样就非常简答判断请求，然后过滤</p>
-<h2 id="_1">总结<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<h2 id="scrapy-scrapy-redis">scrapy 去重与scrapy-redis去重的区别<a class="headerlink" href="#scrapy-scrapy-redis" title="Permanent link">&para;</a></h2>
+<h3 id="scrapy">scrapy 去重<a class="headerlink" href="#scrapy" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="k">yield</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_response</span><span class="p">,</span> <span class="n">dont_filter</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>如果再scrapy中设置了dont_filter=True那么将不做去重处理，默认去重</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="c1"># scrapy/utils/request.py</span>
+<span class="n">_fingerprint_cache</span> <span class="o">=</span> <span class="n">weakref</span><span class="o">.</span><span class="n">WeakKeyDictionary</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">request_fingerprint</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">include_headers</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">include_headers</span><span class="p">:</span>
+        <span class="n">include_headers</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">to_bytes</span><span class="p">(</span><span class="n">h</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+                                 <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">include_headers</span><span class="p">))</span>
+    <span class="n">cache</span> <span class="o">=</span> <span class="n">_fingerprint_cache</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="p">{})</span>
+    <span class="k">if</span> <span class="n">include_headers</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cache</span><span class="p">:</span>
+        <span class="n">fp</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha1</span><span class="p">()</span>
+        <span class="n">fp</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">to_bytes</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">method</span><span class="p">))</span>
+        <span class="n">fp</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">to_bytes</span><span class="p">(</span><span class="n">canonicalize_url</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">url</span><span class="p">)))</span>
+        <span class="n">fp</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">body</span> <span class="ow">or</span> <span class="sa">b</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">include_headers</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">hdr</span> <span class="ow">in</span> <span class="n">include_headers</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">hdr</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="p">:</span>
+                    <span class="n">fp</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">hdr</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">getlist</span><span class="p">(</span><span class="n">hdr</span><span class="p">):</span>
+                        <span class="n">fp</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+        <span class="n">cache</span><span class="p">[</span><span class="n">include_headers</span><span class="p">]</span> <span class="o">=</span> <span class="n">fp</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">cache</span><span class="p">[</span><span class="n">include_headers</span><span class="p">]</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>这段代码主要说的就是</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="err">返回请求指纹。</span>
+
+
+
+<span class="err">请求指纹是唯一标识</span>
+
+<span class="err">请求指向。例如，使用以下两个</span><span class="n">URL</span><span class="err">：</span>
+
+
+
+<span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="p">.</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">query</span><span class="err">？</span><span class="n">id</span><span class="o">=</span><span class="mi">111</span><span class="err">和</span><span class="n">cat</span><span class="o">=</span><span class="mi">222</span>
+
+<span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="p">.</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">query</span><span class="err">？类别</span><span class="o">=</span><span class="mi">222</span><span class="o">&amp;</span><span class="n">id</span><span class="o">=</span><span class="mi">111</span>
+
+
+
+<span class="err">即使这两个不同的</span><span class="n">url都指向同一个资源</span>
+
+<span class="err">它们应该返回相同的响应。</span>
+
+
+
+<span class="err">另一个例子是用于存储会话</span><span class="n">id的cookie</span><span class="err">。假设</span>
+
+<span class="err">只有经过身份验证的用户才能访问以下页：</span>
+
+
+
+<span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="p">.</span><span class="n">example</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">members</span><span class="o">/</span><span class="n">offers</span><span class="p">.</span><span class="n">html</span>
+
+
+
+<span class="err">许多站点使用</span><span class="n">cookie存储会话id</span><span class="err">，这会随机添加</span>
+
+<span class="n">HTTP请求的组件</span><span class="err">，因此在计算时应忽略该组件</span>
+
+<span class="err">指纹。</span>
+
+
+
+<span class="err">因此，在计算</span>
+
+<span class="err">指纹。如果要包含特定的标题，请使用</span>
+
+<span class="n">include_headers参数</span><span class="err">，它是要包含的请求头列表。</span>
+</code></pre></div>
+</td></tr></table>
+
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="err">fp.update(to_bytes(request.method))</span>
+<span class="err">fp.update(to_bytes(canonicalize_url(request.url)))</span>
+<span class="err">fp.update(request.body or b&#39;&#39;)</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>如果没有自定义include_headers，也就是header,只计算method、url、body</p>
+<p>小技巧</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="err"># debug可调</span>
+<span class="err">print(request_fingerprint(scrapy.Request(&#39;http://www.example.com/query?id=111&amp;cat=222&#39;)))</span>
+<span class="err">fad8cefa4d6198af8cb1dcf46add2941b4d32d78</span>
+<span class="err">print(request_fingerprint(scrapy.Request(&#39;http://www.example.com/query?cat=222&amp;id=111&#39;)))</span>
+<span class="err">fad8cefa4d6198af8cb1dcf46add2941b4d32d78</span>
+<span class="err">print(request_fingerprint(scrapy.Request(&#39;http://www.example.com/query&#39;)))</span>
+<span class="err">b64c43a23f5e8b99e19990ce07b75c295165a923</span>
+<span class="err">第一二条相同是应为调用canonicalize_url方法，其本质是调用了w3lib.url.canonicalize_url</span>
+<span class="err">作用是 排序查询参数，这样传的参数不至于换个顺序就不同</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>如下</p>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="nn">w3lib.url</span>
+<span class="o">&gt;&gt;&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># sorting query arguments</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">w3lib</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">canonicalize_url</span><span class="p">(</span><span class="s1">&#39;http://www.example.com/do?c=3&amp;b=5&amp;b=2&amp;a=50&#39;</span><span class="p">)</span>
+<span class="s1">&#39;http://www.example.com/do?a=50&amp;b=2&amp;b=5&amp;c=3&#39;</span>
+<span class="o">&gt;&gt;&gt;</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="c1"># UTF-8 conversion + percent-encoding of non-ASCII characters</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">w3lib</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">canonicalize_url</span><span class="p">(</span><span class="sa">u</span><span class="s1">&#39;http://www.example.com/r</span><span class="se">\u00e9</span><span class="s1">sum</span><span class="se">\u00e9</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="s1">&#39;http://www.example.com/r%C3%A9sum%C3%A9&#39;</span>
+<span class="o">&gt;&gt;&gt;</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>scrapy的去重默认会保存到内存中，如果任务重启，会导致内存中所有去重队列消失</p>
+<h3 id="scrapy-redis_2">scrapy-redis去重<a class="headerlink" href="#scrapy-redis_2" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1
+2
+3
+4
+5</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="err"># settings</span>
+<span class="err"># Enables scheduling storing requests queue in redis.</span>
+<span class="err">SCHEDULER = &quot;scrapy_redis.scheduler.Scheduler&quot;</span>
+<span class="err"># Ensure all spiders share same duplicates filter through redis.</span>
+<span class="err">DUPEFILTER_CLASS = &quot;scrapy_redis.dupefilter.RFPDupeFilter&quot;</span>
+</code></pre></div>
+</td></tr></table>
+
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="o">#</span> <span class="n">scrapy_redis</span><span class="p">.</span><span class="n">dupefilter</span><span class="p">.</span><span class="n">py</span>
+<span class="n">def</span> <span class="n">request_seen</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+    <span class="ss">&quot;&quot;&quot;Returns True if request was already seen.</span>
+
+<span class="ss">    Parameters</span>
+<span class="ss">    ----------</span>
+<span class="ss">    request : scrapy.http.Request</span>
+
+<span class="ss">    Returns</span>
+<span class="ss">    -------</span>
+<span class="ss">    bool</span>
+
+<span class="ss">    &quot;&quot;&quot;</span>
+
+    <span class="o">#</span> <span class="err">通过</span><span class="k">self</span><span class="p">.</span><span class="n">request_fingerprint</span> <span class="err">会生一个</span><span class="n">sha1的指纹</span>
+    <span class="n">fp</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">request_fingerprint</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+    <span class="o">#</span> <span class="n">This</span> <span class="k">returns</span> <span class="n">the</span> <span class="nb">number</span> <span class="k">of</span> <span class="k">values</span> <span class="n">added</span><span class="p">,</span> <span class="n">zero</span> <span class="k">if</span> <span class="n">already</span> <span class="k">exists</span><span class="p">.</span>
+
+    <span class="o">#</span> <span class="err">添加进一个</span><span class="n">Redis集合如果self</span><span class="p">.</span><span class="n">key这个集合中存在fp这个集合会返回1</span> <span class="err">不存在返回</span><span class="mi">0</span>
+    <span class="n">added</span> <span class="o">=</span> <span class="k">self</span><span class="p">.</span><span class="n">server</span><span class="p">.</span><span class="n">sadd</span><span class="p">(</span><span class="k">self</span><span class="p">.</span><span class="k">key</span><span class="p">,</span> <span class="n">fp</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">added</span> <span class="o">==</span> <span class="mi">0</span>
+
+<span class="n">def</span> <span class="n">request_fingerprint</span><span class="p">(</span><span class="k">self</span><span class="p">,</span> <span class="n">request</span><span class="p">):</span>
+    <span class="ss">&quot;&quot;&quot;Returns a fingerprint for a given request.</span>
+
+<span class="ss">    Parameters</span>
+<span class="ss">    ----------</span>
+<span class="ss">    request : scrapy.http.Request</span>
+
+<span class="ss">    Returns</span>
+<span class="ss">    -------</span>
+<span class="ss">    str</span>
+
+<span class="ss">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">request_fingerprint</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+</code></pre></div>
+</td></tr></table>
+
+<p>这个可以看到还是调用scrapy本来的去重方法request_fingerprint做sha1计算，然后把指纹加入到redis中</p>
+<p>使用scrapy-redis 去重的优缺点这里总结下
+1. 优点特别明显，将内存中的去重队列序列化到redis中,即使爬虫关闭了，但是下次重启还是可以继续去重爬取的。
+2. 缺点就是多台机器一起爬的话，redis占用空间会特别大，8GB=8589934592Bytes，平均一个去重指纹40Bytes，约可以存储214,748,000个(2亿)
+3. </p>
+<h3 id="_1">布隆过滤器<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="err">pip install scrapy-redis-bloomfilter</span>
+</code></pre></div>
+</td></tr></table>
+
+<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="err"># settings</span>
+<span class="err"># Ensure use this Scheduler</span>
+<span class="err">SCHEDULER = &quot;scrapy_redis_bloomfilter.scheduler.Scheduler&quot;</span>
+<span class="err"># Ensure all spiders share same duplicates filter through redis</span>
+<span class="err">DUPEFILTER_CLASS = &quot;scrapy_redis_bloomfilter.dupefilter.RFPDupeFilter&quot;</span>
+<span class="err"># Redis URL</span>
+<span class="err">REDIS_URL = &#39;redis://localhost:6379/0&#39;</span>
+<span class="err"># Number of Hash Functions to use, defaults to 6</span>
+<span class="err">BLOOMFILTER_HASH_NUMBER = 6</span>
+<span class="err"># Redis Memory Bit of Bloomfilter Usage, 30 means 2^30 = 128MB, defaults to 30</span>
+<span class="err">BLOOMFILTER_BIT = 30</span>
+<span class="err"># Persist</span>
+<span class="err">SCHEDULER_PERSIST = True</span>
+</code></pre></div>
+</td></tr></table>
+
+<h2 id="_2">总结<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <ol>
 <li>scrapy-redis作为对Scrapy 的调取器进行改造，将原本scrapy 的请求基于队列（Queue）内存处理，还有去重这两个部分使用redis去实现</li>
 </ol>
-<h2 id="_2">思考<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h2 id="_3">思考<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <ol>
 <li>去重是如何做到的，会不会有重复</li>
 </ol>
@@ -2319,7 +2706,7 @@
 <li>实践案例有吗？</li>
 </ol>
 <p><a href="https://github.com/jusk9527/ArticleSpider">可以看下爬取scrapy-redis全网的当当网</a></p>
-<h2 id="_3">参考资料<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h2 id="_4">参考资料<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <p>https://zhuanlan.zhihu.com/p/79120407</p>
 <p>https://www.jianshu.com/p/2104d11ee0a2</p>
                 
