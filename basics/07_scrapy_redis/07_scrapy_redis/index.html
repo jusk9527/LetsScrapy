@@ -1153,7 +1153,8 @@
 </code></pre></div>
 </td></tr></table>
 
-<p>我们知道了这个SCHEDULER(调度器)主要是完成了push Request pop Request去重操作，而且是queue(队列)操作是在内存队列中完成的</p>
+<p><img alt="" src="../11590978217_.pic_hd.jpg" /></p>
+<p>我们知道了这个SCHEDULER(调度器)主要是完成了push Request pop Request和去重操作，而且是使用queue(队列)在内存队列中完成的</p>
 <p>去重的源码我们进一步了解下</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
@@ -1275,11 +1276,7 @@
 </code></pre></div>
 </td></tr></table>
 
-<table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="err">去重我们知道了！一个是利用磁盘打开个文件，这样就能关闭爬虫就不会丢失数据了，一个就是利用集合使用内存的方式去重，优点是快，但是关闭爬虫就会丢失数据。</span>
-</code></pre></div>
-</td></tr></table>
-
-<hr />
+<p>去重我们知道了！scrapy的一个是利用磁盘打开个文件，这样就能关闭爬虫就不会丢失数据了，一个就是利用集合使用内存的方式去重，优点是快，但是关闭爬虫就会丢失数据。</p>
 <h2 id="scrapy-redis_1">scrapy-redis正式登场<a class="headerlink" href="#scrapy-redis_1" title="Permanent link">&para;</a></h2>
 <p>我们了解了scrapy 的调度器是如何工作的情况下我们能否改装下呢？那是可以的</p>
 <p>我们可以看下他的源码</p>
@@ -2516,9 +2513,9 @@
 </ol>
 <h2 id="_3">思考<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <ol>
-<li>去重是如何做到的，会不会有重复</li>
+<li>请求是如何放进队列中的</li>
 </ol>
-<p>去重是将request hash做成key.request他是会先序列化的，序列化的时候就包括了很多</p>
+<p>将request hash做成key，request他是会先序列化的，序列化的时候就包括了很多</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
  3
@@ -2548,7 +2545,9 @@
 27
 28
 29
-30</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">request_to_dict</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">spider</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+30
+31</pre></div></td><td class="code"><div class="codehilite"><pre><span></span><code><span class="c1"># scrapy/utils/reqser.py</span>
+<span class="k">def</span> <span class="nf">request_to_dict</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">spider</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Convert Request object to a dict.</span>
 
 <span class="sd">    If a spider is given, it will try to find out the name of the spider method</span>
@@ -2581,12 +2580,16 @@
 </code></pre></div>
 </td></tr></table>
 
-<p>并不是单单对url做处理哦！所以别担心。基本参数都做处理，那岂不是美滋滋，再也不用担心我爬的竟然没去重.当然我们也是可以改装的，以去适合需求的变化</p>
+<p>并不是单单对url做处理哦！所以别担心。基本参数都做处理，那岂不是美滋滋。</p>
 <ol>
-<li>hash 一次key数值进redis值大不大，能不能优良改装一下</li>
+<li>
+<p>hash 一次key数值进redis值大不大，能不能优良改装一下
+    一次hash是40byte,8G大概是2亿条数据，继续优化的话可以使用<a href="https://github.com/Python3WebSpider/ScrapyRedisBloomFilter">布隆过滤器</a></p>
+</li>
+<li>
+<p>如何使用scrapy-redis</p>
+</li>
 </ol>
-<p>使用<a href="https://github.com/Python3WebSpider/ScrapyRedisBloomFilter">布隆过滤器</a>具体原理下次研究</p>
-<p>3.如何使用scrapy-redis</p>
 <p>这里是<a href="https://github.com/rmax/scrapy-redis">官方文档</a>，按照他的要求在设置就行</p>
 <table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
  2
