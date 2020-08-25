@@ -33,18 +33,18 @@
       
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
-      <link rel="shortcut icon" href="/assets/images/favicon.png">
+      <link rel="shortcut icon" href="../../../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-4.4.1">
     
     
       
-        <title>Let's Scrapy!</title>
+        <title>Scrapy 源码 pipelines - Let's Scrapy!</title>
       
     
     
-      <link rel="stylesheet" href="/assets/stylesheets/application.30686662.css">
+      <link rel="stylesheet" href="../../../../assets/stylesheets/application.30686662.css">
       
-        <link rel="stylesheet" href="/assets/stylesheets/application-palette.a8b3c06d.css">
+        <link rel="stylesheet" href="../../../../assets/stylesheets/application-palette.a8b3c06d.css">
       
       
         
@@ -53,7 +53,7 @@
       
     
     
-      <script src="/assets/javascripts/modernizr.74668098.js"></script>
+      <script src="../../../../assets/javascripts/modernizr.74668098.js"></script>
     
     
       
@@ -62,7 +62,7 @@
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
-    <link rel="stylesheet" href="/assets/fonts/material-icons.css">
+    <link rel="stylesheet" href="../../../../assets/fonts/material-icons.css">
     
     
     
@@ -92,7 +92,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="/." title="Let's Scrapy!" class="md-header-nav__button md-logo">
+        <a href="../../../.." title="Let's Scrapy!" class="md-header-nav__button md-logo">
           
             <i class="md-icon"></i>
           
@@ -109,7 +109,7 @@
             </span>
             <span class="md-header-nav__topic">
               
-                
+                Scrapy 源码 pipelines
               
             </span>
           
@@ -184,7 +184,7 @@
                   <div class="md-sidebar__inner">
                     <nav class="md-nav md-nav--primary" data-md-level="0">
   <label class="md-nav__title md-nav__title--site" for="__drawer">
-    <a href="/." title="Let's Scrapy!" class="md-nav__button md-logo">
+    <a href="../../../.." title="Let's Scrapy!" class="md-nav__button md-logo">
       
         <i class="md-icon"></i>
       
@@ -220,7 +220,7 @@
 
 
   <li class="md-nav__item">
-    <a href="/." title="简介" class="md-nav__link">
+    <a href="../../../.." title="简介" class="md-nav__link">
       简介
     </a>
   </li>
@@ -230,10 +230,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2">
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-2" type="checkbox" id="nav-2" checked>
     
     <label class="md-nav__link" for="nav-2">
       Scrapy 基础
@@ -251,7 +253,7 @@
 
 
   <li class="md-nav__item">
-    <a href="/basics/scrapy/11_scrapy_index/11_scrapy_index/" title="Scrapy 简单介绍" class="md-nav__link">
+    <a href="../../11_scrapy_index/11_scrapy_index/" title="Scrapy 简单介绍" class="md-nav__link">
       Scrapy 简单介绍
     </a>
   </li>
@@ -263,7 +265,7 @@
 
 
   <li class="md-nav__item">
-    <a href="/basics/scrapy/00_scrapy_setting/00_scrapy_setting/" title="Scrapy 源码 settings" class="md-nav__link">
+    <a href="../../00_scrapy_setting/00_scrapy_setting/" title="Scrapy 源码 settings" class="md-nav__link">
       Scrapy 源码 settings
     </a>
   </li>
@@ -275,7 +277,7 @@
 
 
   <li class="md-nav__item">
-    <a href="/basics/scrapy/01_scrapy_request_response/01_scrapy_request_response/" title="Scrapy 源码 request、response" class="md-nav__link">
+    <a href="../../01_scrapy_request_response/01_scrapy_request_response/" title="Scrapy 源码 request、response" class="md-nav__link">
       Scrapy 源码 request、response
     </a>
   </li>
@@ -287,7 +289,7 @@
 
 
   <li class="md-nav__item">
-    <a href="/basics/scrapy/02_scrapy_spider/02_scrapy_spider/" title="Scrapy 源码 Spider" class="md-nav__link">
+    <a href="../../02_scrapy_spider/02_scrapy_spider/" title="Scrapy 源码 Spider" class="md-nav__link">
       Scrapy 源码 Spider
     </a>
   </li>
@@ -299,7 +301,7 @@
 
 
   <li class="md-nav__item">
-    <a href="/basics/scrapy/03_scrapy_crawlspiders/03_scrapy_crawlspiders/" title="Scrapy 源码 CrawlSpider" class="md-nav__link">
+    <a href="../../03_scrapy_crawlspiders/03_scrapy_crawlspiders/" title="Scrapy 源码 CrawlSpider" class="md-nav__link">
       Scrapy 源码 CrawlSpider
     </a>
   </li>
@@ -311,7 +313,7 @@
 
 
   <li class="md-nav__item">
-    <a href="/basics/scrapy/04_scrapy_middlewares/04_scrapy_middlewares/" title="Scrapy 源码 Middewares" class="md-nav__link">
+    <a href="../../04_scrapy_middlewares/04_scrapy_middlewares/" title="Scrapy 源码 Middewares" class="md-nav__link">
       Scrapy 源码 Middewares
     </a>
   </li>
@@ -321,11 +323,18 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="/basics/scrapy/05_scrapy_piplines/05_scrapy_piplines/" title="Scrapy 源码 pipelines" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+    
+    <a href="./" title="Scrapy 源码 pipelines" class="md-nav__link md-nav__link--active">
       Scrapy 源码 pipelines
     </a>
+    
   </li>
 
         
@@ -335,7 +344,7 @@
 
 
   <li class="md-nav__item">
-    <a href="/basics/scrapy/06_scrapy_log/06_scrapy_log/" title="Scrapy 源码 log" class="md-nav__link">
+    <a href="../../06_scrapy_log/06_scrapy_log/" title="Scrapy 源码 log" class="md-nav__link">
       Scrapy 源码 log
     </a>
   </li>
@@ -347,7 +356,7 @@
 
 
   <li class="md-nav__item">
-    <a href="/basics/scrapy/07_scrapy_redis/07_scrapy_redis/" title="Scrapy 源码 scrapy-redis" class="md-nav__link">
+    <a href="../../07_scrapy_redis/07_scrapy_redis/" title="Scrapy 源码 scrapy-redis" class="md-nav__link">
       Scrapy 源码 scrapy-redis
     </a>
   </li>
@@ -359,7 +368,7 @@
 
 
   <li class="md-nav__item">
-    <a href="/basics/scrapy/08_scrapy_scrapyd/08_scrapy_scrapyd/" title="Scrapy scrapyd" class="md-nav__link">
+    <a href="../../08_scrapy_scrapyd/08_scrapy_scrapyd/" title="Scrapy scrapyd" class="md-nav__link">
       Scrapy scrapyd
     </a>
   </li>
@@ -371,7 +380,7 @@
 
 
   <li class="md-nav__item">
-    <a href="/basics/scrapy/09_python_scrapyd_api/09_python_scrapyd_api/" title="Scrapy scrapyd-api" class="md-nav__link">
+    <a href="../../09_python_scrapyd_api/09_python_scrapyd_api/" title="Scrapy scrapyd-api" class="md-nav__link">
       Scrapy scrapyd-api
     </a>
   </li>
@@ -383,7 +392,7 @@
 
 
   <li class="md-nav__item">
-    <a href="/basics/scrapy/10_scrapy_splash/10_scrapy_splash/" title="Scrapy splash" class="md-nav__link">
+    <a href="../../10_scrapy_splash/10_scrapy_splash/" title="Scrapy splash" class="md-nav__link">
       Scrapy splash
     </a>
   </li>
@@ -395,7 +404,7 @@
 
 
   <li class="md-nav__item">
-    <a href="/basics/scrapy/12_scrapy_%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE/12_scrapy_%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE/" title="Scrapy 实战项目" class="md-nav__link">
+    <a href="../../12_scrapy_%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE/12_scrapy_%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE/" title="Scrapy 实战项目" class="md-nav__link">
       Scrapy 实战项目
     </a>
   </li>
@@ -407,7 +416,7 @@
 
 
   <li class="md-nav__item">
-    <a href="/basics/scrapy/13_scrapy_%E5%A5%87%E6%B7%AB%E6%8A%80%E5%B7%A7/13_scrapy_%E5%A5%87%E6%B7%AB%E6%8A%80%E5%B7%A7/" title="Scrapy 奇淫技巧" class="md-nav__link">
+    <a href="../../13_scrapy_%E5%A5%87%E6%B7%AB%E6%8A%80%E5%B7%A7/13_scrapy_%E5%A5%87%E6%B7%AB%E6%8A%80%E5%B7%A7/" title="Scrapy 奇淫技巧" class="md-nav__link">
       Scrapy 奇淫技巧
     </a>
   </li>
@@ -429,8 +438,17 @@
           <div class="md-content">
             <article class="md-content__inner md-typeset">
               
-  <h1>404 - Not found</h1>
-
+                
+                  <a href="https://github.com/jusk9527/LetsScrapy/edit/master/docs/basics/scrapy/05_scrapy_piplines/05_scrapy_piplines.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                  <h1>Scrapy 源码 pipelines</h1>
+                
+                
+                
+                  
+                
+              
               
                 
 
@@ -443,6 +461,41 @@
       
         
 <footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../../04_scrapy_middlewares/04_scrapy_middlewares/" title="Scrapy 源码 Middewares" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Scrapy 源码 Middewares
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../../06_scrapy_log/06_scrapy_log/" title="Scrapy 源码 log" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Scrapy 源码 log
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
   
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
@@ -460,7 +513,7 @@
       </div>
       
   <div class="md-footer-social">
-    <link rel="stylesheet" href="/assets/fonts/font-awesome.css">
+    <link rel="stylesheet" href="../../../../assets/fonts/font-awesome.css">
     
       <a href="https://github.com/jusk9527" class="md-footer-social__link fa fa-github"></a>
     
@@ -472,9 +525,9 @@
       
     </div>
     
-      <script src="/assets/javascripts/application.c648116f.js"></script>
+      <script src="../../../../assets/javascripts/application.c648116f.js"></script>
       
-      <script>app.initialize({version:"1.1.2",url:{base:"/"}})</script>
+      <script>app.initialize({version:"1.1.2",url:{base:"../../../.."}})</script>
       
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
       
